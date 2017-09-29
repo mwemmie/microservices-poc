@@ -6,10 +6,4 @@ gcloud container clusters create microservice-poc-cluster \
   --machine-type n1-standard-1 \
   --zone us-central1-c
 
-# Build and deploy reservation-service microservice
-cd reservation-service
-sh build_docker_deploy_kubernetes.sh
-
-# Build and deploy reservation-service microservice
-cd ../reservation-client
-sh build_docker_deploy_kubernetes.sh
+sh build_all_except_cluster_gcp.sh

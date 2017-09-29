@@ -11,6 +11,6 @@ spec:
     spec:
       containers:
       - name: reservation-client
-        image: reservation-client:v1
+        image: gcr.io/lyrical-epigram-179318/reservation-client:v1
         ports:
         - containerPort: 8080

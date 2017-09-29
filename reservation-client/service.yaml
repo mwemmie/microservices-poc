@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: reservation-client
+spec:
+  type: LoadBalancer
+  selector:
+    service: reservation-client
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080

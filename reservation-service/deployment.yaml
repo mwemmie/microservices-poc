@@ -1,0 +1,16 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: reservation-service
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        service: reservation-service
+    spec:
+      containers:
+      - name: reservation-service
+        image: reservation-service:v1
+        ports:
+        - containerPort: 8080

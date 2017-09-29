@@ -3,28 +3,46 @@ Simple cloud native reservation service using an embedded H2 database and JPA.
 
 Use the shell scripts to build, deploy, and eventually delete from Kubernetes.
 
+Exposes the endpoint `/reservations` on:
+* port 8080 locally and on docker
+* port 80 as `http://reservation-service` on kubernetes
+
 # Build and Deploy
 
-## Build app
+## Run script to handle of all it
+sh build_docker_deploy_kubernetes.sh
+
+## Individual pieces in scripts
+
+### Build a self-executable jar
 `./mvnw -DskipTests clean package`
 
-## Build docker image
+### Build docker image
 `docker build -t reservation-service:v1 .`
 
-## Test docker image, mapping port 8080 on localhost to port 8080 on the running docker container
+### Test docker image, mapping port 8080 on localhost to port 8080 on the running docker container
 `docker run -ti --rm -p 8080:8080 reservation-service:v1`
 
-## Deploy to Kubernetes
-`kubectl run reservation-service --image=reservation-service:v1 --port=8080`
+### Create a Kubernetes deployment and expose the service internally
+sh deploy_kubernetes.sh
 
-## Expose as a service on kubernetes
-`kubectl expose deployment reservation-service --port=80 --target-port=8080`
+#### To create a kubernetes deployment, do one of the following:
+* `kubectl run reservation-service --image=reservation-service:v1 --port=8080`
+* `kubectl create -f deployment.yaml`
 
-# Clean Up Kubernetes When You Want To Stop
+#### To create a kubernetes service exposed internally, do one of the following:
+* `kubectl create -f service.yaml`
+* `kubectl expose deployment reservation-service --port=80 --target-port=8080`
 
-# Delete the service
+# Clean Up Kubernetes When You Want to Stop
+
+## Run script to handle of all it
+sh delete_kubernetes.sh
+
+## Individual Pieces in the Script
+
+### Delete the service
 `kubectl delete service reservation-service`
 
-# Delete the deployment
+### Delete the deployment
 `kubectl delete deployment reservation-service`
-
